@@ -1,6 +1,6 @@
-Simple vivarium controller
+### Simple vivarium controller ###
 
-Hardware:
+#### Hardware: ####
 
 * Arduino UNO or nano 5v 16Mhz
 * RTC I2C DS1307 Module or DS3231 real time clock module 
