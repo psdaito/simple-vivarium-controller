@@ -2,10 +2,10 @@
 void checkTandH(){
   
   h = dht.readHumidity();
-  f = dht.readTemperature(true);  //if using celsius f = dht.readTemperature();
-  //int hif = dht.computeHeatIndex(f, h);  // heat index
+  t = dht.readTemperature(true);  //if using celsius t = dht.readTemperature();
+  //int hif = dht.computeHeatIndex(t, h);  // heat index
     
-  if (isnan(h) || isnan(f))
+  if (isnan(h) || isnan(t))
   {
   lcd.clear();
   lcd.setCursor(3,1);
@@ -28,11 +28,11 @@ void checkTandH(){
 		// to do
 	  }
 
-    if(f < heatOn)
+    if(t < heatOn)
     {
     alarmHeatOn();
     }
-    else if(f > heatOff)
+    else if(t > heatOff)
     {
     alarmHeatOff();
     }
@@ -40,13 +40,37 @@ void checkTandH(){
     {
     // to do
     }
-  printHum();
-  printTemp();  
-  lcd.setCursor(1,3);
-  lcd.print(freeRam());
+	if(dispScreen == 1){ //display temp and hum only if home screen is active
+		printHum();
+		printTemp(); 
+	}    
+  //lcd.setCursor(1,3);
+  //lcd.print(freeRam());
   }
 }
 
+void print2digitsXY(int number, int posX, int posY) {
+	 lcd.setCursor(posX,posY);
+  if (number >= 0 && number < 10) {
+	lcd.print(0);
+	lcd.print(number);
+  }
+  else{
+	lcd.print(number);
+  } 
+}
+
+/*
+void print2digits(int number) {
+  if (number >= 0 && number < 10) {
+	lcd.print(0);
+	lcd.print(number);
+  }
+  else{
+	lcd.print(number);
+  } 
+}
+*/
 
 // LCD print functions
 void printHum(){
@@ -69,11 +93,11 @@ void printTemp(){
   lcd.setCursor(1,1);
   lcd.write(byte(2));
   lcd.setCursor(3,1);
-  lcd.print(f,1);
+  lcd.print(t,1);
   lcd.write(byte(4));
   //lcd.write(0b11011111); // deg character
   //lcd.print(F("F"));
-  if(f > (heatOff + 4)){
+  if(t > (heatOff + 4)){
 	   lcd.setCursor(9,1);
        lcd.print(F("!"));
   }
@@ -100,8 +124,10 @@ void printTime(){
   lcd.print((year() - 2000));
   
 }
-
-void printLight(){
+void printStatus(){
+	if(dispScreen == 1){ // show only if home screen
+		
+	// light status
 	lcd.setCursor(8,3);
 	lcd.write(byte(5));
 	lcd.setCursor(10,3);
@@ -112,10 +138,8 @@ void printLight(){
 	{
 		lcd.print(F("Off"));
 	}
-	
-}
 
-void printFog(){
+	// fogger status
 	lcd.setCursor(14,2);
 	lcd.write(byte(6));
 	lcd.setCursor(16,2);
@@ -127,23 +151,19 @@ void printFog(){
 		lcd.print(F("Off"));
 	}
 	
-}
-
-void printHeat(){
-  lcd.setCursor(14,1);
-  lcd.write(byte(0));
-  lcd.setCursor(16,1);
-  if(powerFogger){
+	// heater status
+	lcd.setCursor(14,1);
+	lcd.write(byte(0));
+	lcd.setCursor(16,1);
+	if(powerFogger){
     lcd.print(F("On "));
-  }
-  else
-  {
-    lcd.print(F("Off"));
-  }
-  
-}
+	}
+	else
+	{
+		lcd.print(F("Off"));
+	}
 
-void printFan(){
+	// fan status
 	lcd.setCursor(14,3);
 	lcd.write(byte(1));
 	lcd.setCursor(16,3);
@@ -154,17 +174,20 @@ void printFan(){
 	{
 		lcd.print(F("Off"));
 	}
+				
+  }
 	
 }
 
 
+
 void logger(){
-  if(f > maxT){
-    maxT = f;
+  if(t > maxT){
+    maxT = t;
    }
    else 
    {
-    if(f < minT) minT = f;
+    if(t < minT) minT = t;
    }
 
    if(h > maxH){
