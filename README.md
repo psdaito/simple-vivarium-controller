@@ -1,3 +1,4 @@
+> This project is work in progres not ready for use!
 ### Simple vivarium controller
 
 #### Hardware:
