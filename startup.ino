@@ -4,7 +4,8 @@ void firstRunSetup()
   if(EEPROM.read(1024)!= 16)
   {
     EEPROM.write(1024,16); // write to EEPROM so this never runs again
-	// set default values on first launch
+    
+	  // set default values on first launch
     EEPROM.write(1,72);   // 1 // heat on
     EEPROM.write(2,78);  // 2 // heat off
     EEPROM.write(3,80);   // 3 // humidity on
@@ -15,7 +16,7 @@ void firstRunSetup()
     EEPROM.write(8,0);   // 8 // lights off minute
     EEPROM.write(9,1);   // 9 // fan on hour
     EEPROM.write(10,0);  // 10 // fan on minute
-	EEPROM.write(11,23);  // 11 // fan off hour
+	  EEPROM.write(11,23);  // 11 // fan off hour
     EEPROM.write(12,0);  // 10 // fan off minute
 	
   }

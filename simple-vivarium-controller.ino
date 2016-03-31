@@ -39,6 +39,9 @@
 #define DHTPIN 2
 #define DHTTYPE DHT22
 
+// uncomment for debuging
+#define DEBUG  
+
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -90,24 +93,40 @@ time_t lastCheckTime = 0;
 time_t dimTime = 0; // used for brightness adjustment
 time_t homeTime = 0; // used for returning home after configured time
 //Screens And menu
+const int Neutral = 0;
+const int Press = 1;
+const int Up = 2;
+const int Down = 3;
+const int Right = 4;
+const int Left = 5;
 byte dispScreen=1;
-byte menuPosition=1; // keep track what is edited now
-byte buttonAction=0; 
+int menuPosition=1; // keep track what is edited now
+int buttonAction=0; 
 /* 1- home
 	2- settings
-		3- sensors
-			4- temperature
-			5- humidity
-		6- schedule
-			7- light sachedule
-			8- fan sachedule	
-	    9- clock
+		3- sensors mp1
+			4- temperature mp1
+			5- humidity mp2
+		6- schedule mp2
+			7- light sachedule mp1
+			8- fan sachedule mp2	
+	    9- clock mp1
 */
 void setup() 
 { 
   // set default values for the first ever run
   firstRunSetup();
-
+  
+  #ifdef DEBUG
+	Serial.begin(9600);
+	delay(100);
+  #endif
+  
+  #ifdef DEBUG
+	Serial.println("Start debug");
+  #endif
+  
+  
   setSyncProvider(RTC.get);
   delay(100);
   //Serial.begin(9600); // needed only for debug
@@ -161,7 +180,7 @@ void loop()
   unsigned long currentMillis = millis(); // get current millis
   time_t currentTime = now();
 	
-  if(now() - lastUpdateTime >= 5)
+  if(now() - lastUpdateTime >= 3)  //runs every 3sec
   {
     lastUpdateTime=now();
     checkTandH();
@@ -169,15 +188,41 @@ void loop()
   }
 
   
-  if(now() != lastCheckTime)
+  if(now() != lastCheckTime) // runs every sec
   {
     lastCheckTime=now();
-    updateTimeDate(false);//passing false results in updating screen only if time or date has changed
 	if(dispScreen == 1){
-	  printTime();
+	  updateTimeDate(false);//passing false results in updating screen only if time or date has changed
 	}
   }
+  //menuActions();  uncomment for live testing
   Alarm.delay(10);
+}
+
+void updateTimeDate(boolean updateTime)
+{
+  // draw date and time
+  if ((hour()!=prevRTC.Hour) || (minute()!=prevRTC.Minute) || updateTime) {
+    prevRTC.Hour = hour();
+    prevRTC.Minute = minute();
+	 lcd.setCursor(0,0);
+    lcd.print(hour());
+    lcd.print(F(":"));
+    newMinute = minute();
+    if(newMinute < 10) lcd.print(0);
+    lcd.print(newMinute);   
+  }
+
+  if ((day()!=prevRTC.Day) || (month()!=prevRTC.Month) || updateTime) {
+    prevRTC.Day = day();
+    prevRTC.Month = month();
+    lcd.setCursor(13,0);
+    lcd.print(month());
+    lcd.print(F("."));
+    lcd.print(day());
+    lcd.print(F("."));
+    lcd.print((year() - 2000));             
+  }
 }
 
 void SaveTime()
@@ -185,7 +230,9 @@ void SaveTime()
   time_t saveTime = makeTime(saveRTC);
   setTime(saveTime);
   RTC.set(saveTime);
-  //updateTimeDate(true);
+  if(dispScreen == 1){
+	  updateTimeDate(true);
+	}
 }
 time_t tmConvert_t(int YYYY, byte MM, byte DD, byte hh, byte mm, byte ss)
 {

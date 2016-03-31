@@ -49,6 +49,43 @@ void checkTandH(){
   }
 }
 
+int checkJoystick()
+{
+  int joystickState = analogRead(3);
+  
+  if (joystickState < 50) return Left;
+  if (joystickState < 150) return Down;
+  if (joystickState < 250) return Press;
+  if (joystickState < 500) return Right;
+  if (joystickState < 650) return Up;
+  return Neutral;
+}
+
+void updateCursor(int x, int y, int x1, int y1, int arrow){
+	if(arrow == 1)
+	{
+	lcd.setCursor(x, y);
+	lcd.print(" ");
+	lcd.setCursor(x1, y1);
+	lcd.print(">");
+	}
+	else if(arrow == 2)
+    {
+    lcd.setCursor(x1, y1);	
+    }
+	else if(arrow == 3)
+	{
+	lcd.setCursor(x, y);
+	lcd.print(" ");
+	lcd.setCursor(x1, y1);	
+	}
+	else if(arrow == 4)
+	{
+	lcd.setCursor(x1, y1);
+	lcd.print(">");	
+	}
+}
+
 void print2digitsXY(int number, int posX, int posY) {
 	 lcd.setCursor(posX,posY);
   if (number >= 0 && number < 10) {
@@ -108,6 +145,7 @@ void printTemp(){
 	
 }
 
+/*
 void printTime(){
   lcd.setCursor(0,0);
   lcd.print(hour());
@@ -124,6 +162,8 @@ void printTime(){
   lcd.print((year() - 2000));
   
 }
+*/
+
 void printStatus(){
 	if(dispScreen == 1){ // show only if home screen
 		
