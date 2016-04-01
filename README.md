@@ -1,3 +1,4 @@
+> Work in progress not fully functional
 ### Simple vivarium controller
 
 #### Hardware:
