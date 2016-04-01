@@ -195,7 +195,7 @@ void loop()
 	  updateTimeDate(false);//passing false results in updating screen only if time or date has changed
 	}
   }
-  menuActions(); 
+  //menuActions();  uncomment for live testing
   Alarm.delay(10);
 }
 
@@ -232,7 +232,7 @@ void SaveTime()
   RTC.set(saveTime);
   if(dispScreen == 1){
 	  updateTimeDate(true);
-  }
+	}
 }
 time_t tmConvert_t(int YYYY, byte MM, byte DD, byte hh, byte mm, byte ss)
 {
