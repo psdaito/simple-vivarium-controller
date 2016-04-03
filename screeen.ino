@@ -159,33 +159,35 @@ void screenFan(){
 	lcd.print(F("EXIT"));
 	lcd.setCursor(7,1);
 	lcd.cursor();
-  lcd.blink();
+    lcd.blink();
 }
 
 void screenClock(){  // have add temporary variables to hold time
 	dispScreen=9;
-	saveRTC.Year = year() - 2000;
+	menuPosition = 1;
+	saveRTC.Year = (year()-1970);
     saveRTC.Month = month();
     saveRTC.Day = day();
     saveRTC.Hour = hour();
     saveRTC.Minute = minute();
     saveRTC.Second = 0;
-	menuPosition = 1;
+	
 	lcd.clear();
 	lcd.setCursor(4,0);
     lcd.print(F("TIME / DATE"));
 	lcd.setCursor(3,1);
 	lcd.print(F("H  M   M  D  Y"));
 	lcd.setCursor(3,2);
-	print2digits(hour());
+	print2digits(saveRTC.Hour);
 	lcd.print(F(":"));
-	print2digits(minute());
+	print2digits(saveRTC.Minute);
 	lcd.setCursor(10,2);
-	print2digits(month());
+	print2digits(saveRTC.Month);
     lcd.print(F("-"));
-    print2digits(day());
+    print2digits(saveRTC.Day);
     lcd.print(F("-"));
-    lcd.print((year() - 2000));	
+	print2digits((saveRTC.Year-30));
+    //lcd.print((saveRTC.Year-30));	
 	lcd.setCursor(5,3);
 	lcd.print(F("SAVE"));
 	lcd.setCursor(12,3);

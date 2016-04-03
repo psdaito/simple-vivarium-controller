@@ -48,8 +48,8 @@ DHT dht(DHTPIN, DHTTYPE);
 //global variables
 int newMinute = 0;
 float h, t ;
-float h1 = 0;
-float f1 = 0;
+//float h1 = 0;
+//float f1 = 0;
 tmElements_t prevRTC, saveRTC;
  //a custom HEX character
 uint8_t heat[8] = {0x09,0x12,0x12,0x09,0x09,0x12,0x12,0x00};
@@ -197,7 +197,7 @@ void loop()
 	  updateTimeDate(false);//passing false results in updating screen only if time or date has changed
 	}
   }
-  //menuActions();  uncomment for live testing
+  menuActions();  //detecting joystick movements and process menu
   Alarm.delay(10);
 }
 
@@ -236,7 +236,7 @@ void SaveTime()
 	  updateTimeDate(true);
 	}
 }
-time_t tmConvert_t(int YYYY, byte MM, byte DD, byte hh, byte mm, byte ss)
+/*time_t tmConvert_t(int YYYY, byte MM, byte DD, byte hh, byte mm, byte ss)
 {
   tmElements_t tmSet;
   tmSet.Year = YYYY - 1970;
@@ -247,6 +247,7 @@ time_t tmConvert_t(int YYYY, byte MM, byte DD, byte hh, byte mm, byte ss)
   tmSet.Second = ss;
   return makeTime(tmSet);         //convert to time_t
 }
+*/
 
 
  

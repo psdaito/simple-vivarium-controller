@@ -560,6 +560,56 @@ void menuActions(){
       break;
 	  
     case 9: // Clock
+	
+	    /* 
+		
+		hour +
+			saveRTC.Hour=(saveRTC.Hour+1);
+			if (saveRTC.Hour>23) saveRTC.Hour=0;
+		
+		hour -
+			saveRTC.Hour=(saveRTC.Hour-1);
+			if (saveRTC.Hour<0) saveRTC.Hour=23;
+		
+		
+		min +
+			saveRTC.Minute=(saveRTC.Minute+1);
+            if (saveRTC.Minute>59) saveRTC.Minute=0;
+		
+		min -
+		 saveRTC.Minute=(saveRTC.Minute-1);
+         if (saveRTC.Minute<0) saveRTC.Minute=59;
+		
+		Month+
+		   saveRTC.Month=(saveRTC.Month+1);
+		   if (saveRTC.Month>12) saveRTC.Month=1;
+		month -  
+		   saveRTC.Month=(saveRTC.Month-1);
+		   if (saveRTC.Month<1) saveRTC.Month=12;
+		   
+		day +
+			saveRTC.Day=(saveRTC.Day+1);
+			if (saveRTC.Day>31) saveRTC.Day=1;
+
+		day -
+			saveRTC.Day=(saveRTC.Day-1);
+			if (saveRTC.Day<1) saveRTC.Day=31;
+	  
+		year +
+			saveRTC.Year=(saveRTC.Year+1);
+			if (saveRTC.Year>129) saveRTC.Year=30; // 30 == 2000, 130 == 2100
+			for print : year = (saveRTC.Year-30)
+	  
+	  year -
+			saveRTC.Year=(saveRTC.Year-1);
+			if (saveRTC.Year<30) saveRTC.Year=129;
+			for print : year = (saveRTC.Year-30)
+		   
+		   
+	  save press
+	  SaveTime();
+      screenSettings();
+	  */
 
       break;
   }

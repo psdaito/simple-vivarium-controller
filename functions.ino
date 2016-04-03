@@ -62,18 +62,18 @@ int checkJoystick()
 }
 
 void updateCursor(int x, int y, int x1, int y1, int arrow){
-	if(arrow == 1)
+	if(arrow == 1) // remove arrow  move cursor add arrow
 	{
 	lcd.setCursor(x, y);
 	lcd.print(" ");
 	lcd.setCursor(x1, y1);
 	lcd.print(">");
 	}
-	else if(arrow == 2)
+	else if(arrow == 2) // move cursor only
     {
     lcd.setCursor(x1, y1);	
     }
-	else if(arrow == 3)
+	else if(arrow == 3) // remove arrow move cursor
 	{
 	lcd.setCursor(x, y);
 	lcd.print(" ");
@@ -81,7 +81,7 @@ void updateCursor(int x, int y, int x1, int y1, int arrow){
 	}
 	else if(arrow == 4)
 	{
-	lcd.setCursor(x1, y1);
+	lcd.setCursor(x1, y1); //move cursor add arrow
 	lcd.print(">");	
 	}
 }
