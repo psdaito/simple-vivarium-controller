@@ -97,7 +97,7 @@ void print2digitsXY(int number, int posX, int posY) {
   } 
 }
 
-/*
+
 void print2digits(int number) {
   if (number >= 0 && number < 10) {
 	lcd.print(0);
@@ -107,7 +107,7 @@ void print2digits(int number) {
 	lcd.print(number);
   } 
 }
-*/
+
 
 // LCD print functions
 void printHum(){

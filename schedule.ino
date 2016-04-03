@@ -5,7 +5,7 @@ void loadSchedule(){
   Alarm.alarmRepeat(onFanH,onFanM,0,alarmFanOn);  // 10:00am light on
   Alarm.alarmRepeat(offFanH,offFanM,0,alarmFanOff);  // 10:00pm light off
   if((hour() > onLightsH) && (hour() < offLightsH)) alarmLightOn(); // at boot turn lights on if needed.
-  if((hour() > onFanH) && (hour() < offFanH)) alarmFanOn(); // at boot turn lights on if needed.  
+  if((hour() > onFanH) && (hour() < offFanH)) alarmFanOn(); // at boot turn fan on if needed.  
 }
 void updateAlarms()
 {

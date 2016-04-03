@@ -133,10 +133,10 @@ void setup()
   //delay(100); 
   if(timeStatus()!= timeSet)
   {
-    saveRTC.Year = 45;
-    saveRTC.Month = 1;
-    saveRTC.Day = 1;
-    saveRTC.Hour = 6;
+    saveRTC.Year = 46;
+    saveRTC.Month = 4;
+    saveRTC.Day = 2;
+    saveRTC.Hour = 12;
     saveRTC.Minute = 0;
     saveRTC.Second = 0;
     RTC.set(makeTime(saveRTC));
@@ -159,7 +159,8 @@ void setup()
   //set hihg to avoid relay clicking before checking status
   digitalWrite(relayLight, HIGH);
   digitalWrite(relayHeat, HIGH); 
-  digitalWrite(relayFog, HIGH); 
+  digitalWrite(relayFog, HIGH);
+  digitalWrite(relayFan, HIGH);   
   //set pins
   pinMode(relayLight, OUTPUT);
   pinMode(relayHeat, OUTPUT);
@@ -171,7 +172,8 @@ void setup()
   //load power schedule
   loadSchedule();
   //load home screen
-  screenHome();
+  //screenHome();
+  dispScreen=1;
 }
 
 
