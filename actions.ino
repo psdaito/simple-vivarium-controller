@@ -399,6 +399,7 @@ void menuActions(){
 			EEPROM.write(6,onLightsM);
 			EEPROM.write(7,offLightsH);
 			EEPROM.write(8,offLightsM);
+			screenSchedule();
 		}
 		else if(menuPosition == 6 && buttonAction == Up) 
 		{
@@ -542,6 +543,7 @@ void menuActions(){
 			EEPROM.write(10,onFanM);
 			EEPROM.write(11,offFanH);
 			EEPROM.write(12,offFanM);
+			screenSchedule();
 		}
 		else if(menuPosition == 6 && buttonAction == Up) 
 		{
@@ -561,55 +563,156 @@ void menuActions(){
 	  
     case 9: // Clock
 	
-	    /* 
-		
-		hour +
-			saveRTC.Hour=(saveRTC.Hour+1);
-			if (saveRTC.Hour>23) saveRTC.Hour=0;
-		
-		hour -
-			saveRTC.Hour=(saveRTC.Hour-1);
-			if (saveRTC.Hour<0) saveRTC.Hour=23;
-		
-		
-		min +
-			saveRTC.Minute=(saveRTC.Minute+1);
-            if (saveRTC.Minute>59) saveRTC.Minute=0;
-		
-		min -
-		 saveRTC.Minute=(saveRTC.Minute-1);
-         if (saveRTC.Minute<0) saveRTC.Minute=59;
-		
-		Month+
-		   saveRTC.Month=(saveRTC.Month+1);
-		   if (saveRTC.Month>12) saveRTC.Month=1;
-		month -  
-		   saveRTC.Month=(saveRTC.Month-1);
-		   if (saveRTC.Month<1) saveRTC.Month=12;
-		   
-		day +
-			saveRTC.Day=(saveRTC.Day+1);
-			if (saveRTC.Day>31) saveRTC.Day=1;
-
-		day -
-			saveRTC.Day=(saveRTC.Day-1);
-			if (saveRTC.Day<1) saveRTC.Day=31;
-	  
-		year +
-			saveRTC.Year=(saveRTC.Year+1);
-			if (saveRTC.Year>129) saveRTC.Year=30; // 30 == 2000, 130 == 2100
-			for print : year = (saveRTC.Year-30)
-	  
-	  year -
-			saveRTC.Year=(saveRTC.Year-1);
-			if (saveRTC.Year<30) saveRTC.Year=129;
-			for print : year = (saveRTC.Year-30)
-		   
-		   
-	  save press
-	  SaveTime();
-      screenSettings();
-	  */
+		if(menuPosition == 1 && buttonAction == Right) // 1 hour
+		{
+			// add H max 23
+			saveRTC.Hour +=1;
+			if(saveRTC.Hour > 23) saveRTC.Hour = 0;
+			print2digits(saveRTC.Hour);
+			lcd.setCursor(3,2);
+		}
+		else if(menuPosition == 1 && buttonAction == Left)
+		{
+			// subst H
+			saveRTC.Hour -=1;
+			if(saveRTC.Hour < 0) saveRTC.Hour = 23;
+			print2digits(saveRTC.Hour);
+			lcd.setCursor(3,2);
+		}
+		else if(menuPosition == 1 && buttonAction == Down) // 1
+		{
+			menuPosition = 2;
+			updateCursor(3,2,6,2,2);
+		}
+		else if(menuPosition == 2 && buttonAction == Right) //2 minute
+		{
+			// add min max59
+			saveRTC.Minute +=1;
+			if(saveRTC.Minute > 59) saveRTC.Minute = 0;
+			print2digits(saveRTC.Minute);
+			lcd.setCursor(6,2);
+		}
+		else if(menuPosition == 2 && buttonAction == Left)
+		{
+			// substr min
+			saveRTC.Minute -=1;
+			if(saveRTC.Minute < 0) saveRTC.Minute = 59;
+			print2digits(saveRTC.Minute);
+			lcd.setCursor(6,2);
+		}
+		else if(menuPosition == 2 && buttonAction == Down)
+		{
+			menuPosition = 3;
+			updateCursor(6,2,10,2,2);
+		}
+		else if(menuPosition == 2 && buttonAction == Up) //2
+		{
+			menuPosition = 1;
+			updateCursor(6,2,3,2,2);
+		}
+		else if(menuPosition == 3 && buttonAction == Right) //3 month
+		{
+			// add M max 12
+			saveRTC.Month +=1;
+			if(saveRTC.Month > 12) saveRTC.Minute = 1;
+			print2digits(saveRTC.Month);
+			lcd.setCursor(10,2);
+		}
+		else if(menuPosition == 3 && buttonAction == Left)
+		{
+			// subst M
+			saveRTC.Month -=1;
+			if(saveRTC.Month < 1) saveRTC.Minute = 12;
+			print2digits(saveRTC.Month);
+			lcd.setCursor(10,2);
+		}
+		else if(menuPosition == 3 && buttonAction == Down)
+		{
+			menuPosition = 4;
+			updateCursor(10,2,13,2,2);
+		}
+		else if(menuPosition == 3 && buttonAction == Up) //3
+		{
+			menuPosition = 2;
+			updateCursor(10,2,6,2,2);
+		}
+		else if(menuPosition == 4 && buttonAction == Right) //4 day
+		{
+			//add D
+			saveRTC.Day +=1;
+			if(saveRTC.Day > 31) saveRTC.Day = 1;
+			print2digits(saveRTC.Day);
+			lcd.setCursor(13,2);
+		}
+		else if(menuPosition == 4 && buttonAction == Left)
+		{
+			//substr D
+			saveRTC.Day -=1;
+			if(saveRTC.Day < 1) saveRTC.Day = 31;
+			print2digits(saveRTC.Day);
+			lcd.setCursor(13,2);
+		}
+		else if(menuPosition == 4 && buttonAction == Down)
+		{
+			menuPosition = 5;
+			updateCursor(13,2,16,2,2);
+		}
+		else if(menuPosition == 4 && buttonAction == Up) //4
+		{
+			menuPosition = 3;
+			updateCursor(13,2,10,2,2);
+		}
+		else if(menuPosition == 5 && buttonAction == Right) //5 year
+		{
+			//add Y
+			saveRTC.Year +=1;
+			if(saveRTC.Year > 129) saveRTC.Year = 30;
+			print2digits((saveRTC.Year - 30));
+			lcd.setCursor(16,2);
+		}
+		else if(menuPosition == 5 && buttonAction == Left)
+		{
+			//substr Y
+			saveRTC.Year -=1;
+			if(saveRTC.Year < 30) saveRTC.Year = 129;
+			print2digits((saveRTC.Year - 30));
+			lcd.setCursor(16,2);
+		}
+		else if(menuPosition == 5 && buttonAction == Down)
+		{
+			menuPosition = 6;
+			updateCursor(16,2,4,3,4);
+		}
+		else if(menuPosition == 5 && buttonAction == Up) //5
+		{
+			menuPosition = 4;
+			updateCursor(16,2,13,2,2);
+		}		
+		else if(menuPosition == 6 && buttonAction == Press) //6 save
+		{
+			// save time date
+			SaveTime();
+			screenSettings();
+		}
+		else if(menuPosition == 6 && buttonAction == Down)
+		{
+			menuPosition = 7;
+			updateCursor(4,3,10,3,1);
+		}
+		else if(menuPosition == 6 && buttonAction == Up) //6
+		{
+			menuPosition = 5;
+			updateCursor(4,3,16,2,3);
+		}		
+		else if(menuPosition == 7 && buttonAction == Press) //7 exit
+		{
+			screenSettings();
+		}
+		else if(menuPosition == 7 && buttonAction == Up) //7
+		{
+			menuPosition = 6;
+			updateCursor(10,3,4,3,1);
+		}
 
       break;
   }

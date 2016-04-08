@@ -40,7 +40,7 @@
 #define DHTTYPE DHT22
 
 // uncomment for debuging
-#define DEBUG  
+//#define DEBUG  
 
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  
 DHT dht(DHTPIN, DHTTYPE);
@@ -129,8 +129,6 @@ void setup()
   
   setSyncProvider(RTC.get);
   delay(100);
-  //Serial.begin(9600); // needed only for debug
-  //delay(100); 
   if(timeStatus()!= timeSet)
   {
     saveRTC.Year = 46;

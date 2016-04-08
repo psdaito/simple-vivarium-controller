@@ -14,32 +14,29 @@ void checkTandH(){
   alarmHeatOff();
   }
   else
-  { 
-	  if(h < humOn)
+  {
+
+  int intt = t;
+  int inth = h;
+     
+	  if(inth < humOn)
 	  {
 		alarmFogOn();
 	  }
-	  else if(h > humOff)
+	  else if(inth > humOff)
 	  {
 		alarmFogOff();
 	  }
-	  else
-	  {
-		// to do
-	  }
 
-    if(t < heatOn)
+    if(intt < heatOn)
     {
     alarmHeatOn();
     }
-    else if(t > heatOff)
+    else if(intt > heatOff)
     {
     alarmHeatOff();
     }
-    else
-    {
-    // to do
-    }
+
 	if(dispScreen == 1){ //display temp and hum only if home screen is active
 		printHum();
 		printTemp(); 
@@ -52,7 +49,7 @@ void checkTandH(){
 int checkJoystick()
 {
   int joystickState = analogRead(3);
-  
+  // need to calibrate before use !!!!
   if (joystickState < 50) return Left;
   if (joystickState < 150) return Down;
   if (joystickState < 250) return Press;
@@ -88,7 +85,7 @@ void updateCursor(int x, int y, int x1, int y1, int arrow){
 
 void print2digitsXY(int number, int posX, int posY) {
 	 lcd.setCursor(posX,posY);
-  if (number >= 0 && number < 10) {
+  if (number <= 0 && number < 10) {
 	lcd.print(0);
 	lcd.print(number);
   }
@@ -99,7 +96,7 @@ void print2digitsXY(int number, int posX, int posY) {
 
 
 void print2digits(int number) {
-  if (number >= 0 && number < 10) {
+  if (number <= 0 && number < 10) {
 	lcd.print(0);
 	lcd.print(number);
   }
@@ -195,7 +192,7 @@ void printStatus(){
 	lcd.setCursor(14,1);
 	lcd.write(byte(0));
 	lcd.setCursor(16,1);
-	if(powerFogger){
+	if(powerHeat){
     lcd.print(F("On "));
 	}
 	else

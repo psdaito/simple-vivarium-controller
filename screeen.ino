@@ -162,7 +162,7 @@ void screenFan(){
     lcd.blink();
 }
 
-void screenClock(){  // have add temporary variables to hold time
+void screenClock(){  
 	dispScreen=9;
 	menuPosition = 1;
 	saveRTC.Year = (year()-1970);

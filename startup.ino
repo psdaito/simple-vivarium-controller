@@ -17,7 +17,7 @@ void firstRunSetup()
     EEPROM.write(9,1);   // 9 // fan on hour
     EEPROM.write(10,0);  // 10 // fan on minute
     EEPROM.write(11,23);  // 11 // fan off hour
-    EEPROM.write(12,0);  // 10 // fan off minute
+    EEPROM.write(12,59);  // 10 // fan off minute
 	
   }
 }
