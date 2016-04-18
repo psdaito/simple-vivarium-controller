@@ -48,13 +48,13 @@ void checkTandH(){
 
 int checkJoystick()
 {
-  int joystickState = analogRead(3);
+  int joystickState = analogRead(A3);
   // need to calibrate before use !!!!
-  if (joystickState < 50) return Left;
-  if (joystickState < 150) return Down;
-  if (joystickState < 250) return Press;
-  if (joystickState < 500) return Right;
-  if (joystickState < 650) return Up;
+  if (joystickState < 30) return Left;  //50
+  if (joystickState < 90) return Down; //150
+  if (joystickState < 150) return Press; //250
+  if (joystickState < 400) return Right;  //500
+  if (joystickState < 660) return Up;  //650
   return Neutral;
 }
 

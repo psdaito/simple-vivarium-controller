@@ -4,6 +4,7 @@ void menuActions(){
     // buttonAction=0; what button was presed
 	// dispScreen=1; what menu we are editing
 	buttonAction = checkJoystick();
+ Alarm.delay(200);
 	if(buttonAction != Neutral){
    switch (dispScreen)
   { 

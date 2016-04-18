@@ -100,7 +100,7 @@ const int Down = 3;
 const int Right = 4;
 const int Left = 5;
 byte dispScreen=1;
-int menuPosition=1; // keep track what is edited now
+int menuPosition=0; // keep track what is edited now
 int buttonAction=0; 
 /* 1- home
 	2- settings
@@ -170,7 +170,7 @@ void setup()
   //load power schedule
   loadSchedule();
   //load home screen
-  //screenHome();
+  screenHome();
   dispScreen=1;
 }
 
@@ -197,6 +197,12 @@ void loop()
   }
   menuActions();  //detecting joystick movements and process menu
   Alarm.delay(10);
+  #ifdef DEBUG
+  Serial.print("Scren:");
+  Serial.println(dispScreen);
+  Serial.print("Menu Position:");
+  Serial.println(menuPosition);  
+  #endif
 }
 
 void updateTimeDate(boolean updateTime)
